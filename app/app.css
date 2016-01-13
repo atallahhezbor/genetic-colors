@@ -1,5 +1,12 @@
 /* app css stylesheet */
-
+@font-face {
+  font-size: 80px;
+  /*font-family:  'Lucida Sans Unicode', 'Lucida Grande';*/
+  /*font-family:  'Century Gothic';*/
+  font-family:  "Arial";
+  font-weight: lighter;  
+  /*font-style: oblique;*/  
+}
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
@@ -27,4 +34,328 @@
 .menu > li:nth-child(1):before {
   content: "";
   padding: 0;
+}
+
+
+.heading {
+  text-align: center;
+  font-size: 45px;
+  /*font-family:  'Lucida Sans Unicode', 'Lucida Grande';*/
+  /*font-family:  'Century Gothic';*/    
+  color: #555;
+  margin-top: 0px;
+}
+
+.select {
+  width:50%;
+  margin-left:auto;
+  margin-right:auto;
+  text-align: center;
+  height:100px;
+}
+
+.color-input {
+  border-top:none;
+  border-left:none;
+  border-right:none;
+  outline:none;
+  width:100%;  
+  font-size:40px;
+  vertical-align: bottom;  
+  margin-top: 140px;
+}
+
+/*.input[type=text]:focus {
+  text-align: bottom;  
+  outline:none;
+  width:100%;  
+  font-size:40px;
+}*/
+.light {
+  margin-top: 20px;
+  color: lightgray;
+  font-size: 20px;
+}
+
+
+.center {
+  width:40%;
+  height:500px;
+  margin-left: auto;
+  margin-right:auto;  
+  text-align: center;  
+}
+
+
+.card {
+  margin-top: 10px;
+  border-radius:3px;
+  -webkit-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.250);
+  -moz-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.250);
+  box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.250);
+  background-color:white;
+}
+
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    width: 260px;
+    height: auto;
+    text-align: center;
+    /*width:auto;*/
+    /*height:auto;*/
+    /*margin-right: auto;*/
+    /*margin-left:auto;*/
+    /*background-color: black;*/
+    /*border: thin solid black;*/
+    margin-top: auto;
+}
+
+.color-box {  
+
+  width:50px;
+  height:50px;
+  /*border: thin white;*/
+  /*border-style: solid;*/
+/*  -webkit-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.75);*/
+  /*border-width: 5px;*/
+  /*outline-: black;*/
+  margin:1px;
+  border-radius: 5px;
+  position:relative;
+}
+
+.color-box:hover {  
+
+/*  -webkit-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25);
+  -moz-box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25);
+  box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.25);*/
+  transform: scale(1.1);
+
+}
+
+/*.color-box.ng-enter, .color-box.ng-move {
+  -webkit-transition:0.5s linear all;
+  -moz-transition:0.5s linear all;
+  -o-transition:0.5s linear all;
+  transition:0.5s linear all;
+  opacity:0;
+}
+
+.color-box.ng-leave {
+  -webkit-animation:0.5s my_animation;
+  -moz-animation:0.5s my_animation;
+  -o-animation:0.5s my_animation;
+  animation:0.5s my_animation;
+}
+
+.repeated-item.ng-enter.ng-enter-active,
+.repeated-item.ng-move.ng-move-active {
+  opacity:1;
+}
+
+
+@keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+
+
+@-webkit-keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+
+@-moz-keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
+}
+
+@-o-keyframes my_animation {
+  from { opacity:1; }
+  to { opacity:0; }
+}*/
+
+
+
+#population-box {  
+  width:20%;
+  float:left;
+  margin-left: 10px;
+  margin-right: 0px;
+  margin-top: 50px;
+  /*margin-bottom: 20px;  */
+  min-height: 57px;
+  /*height:auto;  */
+}
+
+
+.next-button {  
+  position:absolute;
+  /*background-color: lightgray;*/
+  /*border-radius: 5px;*/
+  color:white;
+  bottom:0px;
+  
+}
+
+
+.next-button:hover {
+  background-color: darkgray;
+  border-radius: 5px;
+  color:white;
+}
+
+.color-container {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#population-card {  
+  height:auto;
+  width:95%;
+  margin-right:auto;  
+
+}
+
+body {
+  height:100%;
+  background-color:#eee !important;
+}
+
+.color-card {
+  width:155px;
+  height:175px;
+  float:right;  
+  border-radius:4px;
+  -webkit-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.250);
+  -moz-box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.250);
+  box-shadow: 0px 0px 2px 2px rgba(0,0,0,0.250);
+  background-color:white; 
+
+}
+
+.color-section {
+
+  width:100%;
+  height:70%;
+  background-color:green;
+}
+
+.text-section {
+  border-top:thin solid lightgray;
+  text-align: center;
+  font-size:21px;
+  height:auto;
+  color:gray;
+
+}
+.rgb-section {
+  border-top:thin solid lightgray;
+  text-align: center;  
+  height:auto;
+  color:gray;
+
+}
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+
+
+
+.color-box.selected {
+  /*position:absolute;*/
+/*  -webkit-transition:0.5s linear all;
+  -moz-transition:0.5s linear all;
+  -o-transition:0.5s linear all;
+  transition:0.5s linear all;
+  /*-webkit-transform: translateX(50%) scale(2, 2);*/
+  /*transform: translateX(50%) scale(2, 2);*/*/
+}
+
+
+/*.parents.enlarge {
+  -webkit-transition:0.5s linear all;
+  -moz-transition:0.5s linear all;
+  -o-transition:0.5s linear all;
+  transition:0.5s linear all;
+  -webkit-transform: scale(1.5,1.5);
+  transform: scale(1.5,1.5);
+}
+
+*/
+#parent-a {
+  float:left;
+}
+
+#parent-b {
+  float:right;
+}
+
+
+#parent-container {
+  position: relative;
+}
+
+.card-container {
+  perspective: 1000;
+}
+
+.card.flippable {
+  /*position:absolute;*/
+  opacity:0;
+  transform: rotateY(180deg);
+  backface-visibility:hidden;  
+  transform-style: preserve-3d;
+  
+}
+.card.flippable.flip {
+  opacity:1;
+  transition: 0.7s;
+ /* transition: 20s;
+  transform-style: preserve-3d;*/
+  transform: rotateY(0deg);
+}
+
+#child-container {
+  position:absolute;  
+  bottom:0px;
+  margin-left:auto;
+  /*left:50%;*/
+  /*margin-left:auto;*/
+}
+/*#child-container > .card-container {
+  position: absolute;
+  bottom: 0px;
+}*/
+
+
+/*
+@-webkit-keyframes spaceboots {
+  0% { -webkit-transform: translate(2px, 1px) rotate(0deg); }
+  10% { -webkit-transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { -webkit-transform: translate(-3px, 0px) rotate(1deg); }
+  30% { -webkit-transform: translate(0px, 2px) rotate(0deg); }
+  40% { -webkit-transform: translate(1px, -1px) rotate(1deg); }
+  50% { -webkit-transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { -webkit-transform: translate(-3px, 1px) rotate(0deg); }
+  70% { -webkit-transform: translate(2px, 1px) rotate(-1deg); }
+  80% { -webkit-transform: translate(-1px, -1px) rotate(1deg); }
+  90% { -webkit-transform: translate(2px, 2px) rotate(0deg); }
+  100% { -webkit-transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.card.shake {
+  -webkit-animation-name: spaceboots;
+  -webkit-animation-iteration-count: infinite;
+}
+*/
+
+#child-box {
+  position: absolute;
 }

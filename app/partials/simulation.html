@@ -1,0 +1,35 @@
+<div id="parent-container">
+    <div class="card-container">
+		<div id="parent-a" ng-cloak ng-class="parentsSelected ? 'card color-card flippable flip' : 'card color-card flippable'">
+	    	<div class="color-section"></div>
+	    	<div class="text-section"> Parent</div>      
+	    	<div class="rgb-section">RGB {{parentA.RGBs}}</div>
+		</div>
+	</div>
+    <div class="card-container">
+  		<div id="parent-b" ng-cloak ng-class="parentsSelected ? 'card color-card flippable flip' : 'card color-card flippable'">
+		    <div class="color-section"></div>
+		    <div class="text-section"> Parent</div>      
+		    <div class="rgb-section">RGB {{parentB.RGBs}}</div>
+  		</div>
+    </div>
+</div>
+
+<div id="child-container">
+    <div class="card-container">
+  		<div id="new-child" ng-cloak ng-class="born ? 'card color-card flippable flip' : 'card color-card flippable'">
+		    <div class="color-section"></div>
+		    <div class="text-section"> Child</div>      
+		    <div class="rgb-section">RGB {{child.RGBs}}</div>
+  		</div>
+    </div>
+    
+</div>
+<div id="child-box" class="color-box" color-box color={{child.color}}></div>	
+
+<!-- 	<div id="parentA" color-box color={{parentA.color}} ng-class="parentsSelected ? 'color-box parents enlarge' : 'color-box parents'"></div>
+	<div id="parentB" color-box color={{parentB.color}} ng-class="parentsSelected ? 'color-box parents enlarge' : 'color-box parents'"></div> -->
+
+<div class="btn-container">
+	<button class="btn btn-default next-button" ng-click="runIteration()">Iterate</button>
+</div>
