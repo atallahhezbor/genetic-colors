@@ -54,7 +54,19 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 	}
 
 	$scope.runIteration = function() {
-		console.log("Starting iteration")
+		console.log("Starting iteration");
+		if($scope.parentA != null) {
+			$("#citizen-" + $scope.parentA.id).show();
+			$("#citizen-" + $scope.parentB.id).show();	
+			$("#citizen-" + $scope.parentA.id).animate({left: "0"}, 900);
+			$("#citizen-" + $scope.parentB.id).animate({left: "0"}, 900);
+			$rootScope.population[$scope.parentA.id].selected = false;
+			$rootScope.population[$scope.parentB.id].selected = false;
+			$scope.parentsSelected = false;
+			$scope.born = false;
+			$scope.parentA = null;
+			$scope.parentB = null;
+		}
 		selectParents().then(function(response) {
 			console.log("selection done");
 			$timeout(function() {											
@@ -95,7 +107,7 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		console.log("center", $(".center").width());
 		
 		angular.forEach($rootScope.population, function(citizen) {
-			var probabilityOfSelection = sigmoid(citizen['fitness']);
+			var probabilityOfSelection = sigmoid(citizen['fitness']) / 2;
 			probabilties.push(probabilityOfSelection);
 			console.log("prob is " + probabilityOfSelection);
 			var flip = Math.random();
@@ -122,13 +134,7 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
     						left: distanceBLeft
 					}, 900, function() {
 						$("#citizen-" + $scope.parentA.id).hide();
-						$("#citizen-" + $scope.parentB.id).hide();
-						// console.log("a left",$("#citizen-" + $scope.parentA.id).position().left );
-						// $("#parent-a").css({'left' : $("#citizen-" + $scope.parentA.id).position().left })
-						// $("#parent-b").css({'left':$("#citizen-" + $scope.parentB.id).position().left })
-						
-						// console.log("done animating")
-						// citizen['selected'] = true;						
+						$("#citizen-" + $scope.parentB.id).hide();					
 					});
 					$timeout(function() {
 						$scope.parentsSelected = true;
@@ -296,12 +302,13 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		// }
 
 		// TODO: mutate if duplicate?
-		// mutateChild(child);
+
+		mutateChild(child);
 		
 
 		// turn child into citizen
 		child.fitness = fitness(child);
-
+		console.log("NEW child fitness is", child.fitness)
 		// pad hex values if < 16
 		var red = child.RGBs[0] < 16 ? "0" + child.RGBs[0].toString(16) : child.RGBs[0].toString(16);
 		var green = child.RGBs[1] < 16 ? "0" + child.RGBs[1].toString(16) : child.RGBs[1].toString(16);
@@ -313,12 +320,18 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		$scope.child=child;
 		$scope.born = true;
 
+		$("#child-box").css({'background-color': child.color});
 
-		var distanceRight = "-=" + $("#new-child").position().left;
+		console.log("top",$("#child-box").position().top);
+		console.log("left",$("#child-box").position().left);
+		var distanceRight = "-=" + ($("#body").width() / 2 + 20);
+		var distanceUp = "+=" + ($("#child-box").position().top + 80);
 		$("#child-box").animate(
-			{'left':distanceRight}, 
+			{'left':distanceRight, 'bottom':distanceUp}, 
 			800, function() {
-				$rootScope.population.push(child.color);	
+				console.log("done animating")
+				$rootScope.population.push(child);	
+				$rootScope.$apply();
 			}
 		);
 
@@ -338,7 +351,7 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 
 	function mutateChild(child) {
 		for (var i = 0; i < 3; i++) {
-			child.RGBs[i] = Math.floor( (1+(Math.random()/2)) * child.RGBs[i]);
+			child.RGBs[i] = Math.floor( (1+(Math.random()/10)) * child.RGBs[i]);
 		}
 	}
 

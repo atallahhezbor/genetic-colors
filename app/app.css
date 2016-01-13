@@ -309,6 +309,7 @@ body {
 .card.flippable {
   /*position:absolute;*/
   opacity:0;
+  /*transition: 0.7s;*/
   transform: rotateY(180deg);
   backface-visibility:hidden;  
   transform-style: preserve-3d;
@@ -358,4 +359,6 @@ body {
 
 #child-box {
   position: absolute;
+  bottom: 0px;
+  left:0px;
 }
