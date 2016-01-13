@@ -13,39 +13,40 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 
 		if (angular.isUndefined($rootScope.population) || ($rootScope.population.length == 0)) {
 			$window.location.href = "/app/#/"
-		}
-		$('.center').removeClass('card');
+		} else {
+			$('.center').removeClass('card');
 
-		angular.forEach($rootScope.population, function(citizen, index) {
-		
-			// Convert the color to an rgb array
-			var colorRGBs = hexToRGB(citizen.color);
-
+			angular.forEach($rootScope.population, function(citizen, index) {
 			
-			citizen['id'] = index;
-			citizen['RGBs'] = colorRGBs;
-			citizen['fitness'] = 0;
-			citizen['color'] = citizen.color;
-			citizen['bestColor'] = 0;
+				// Convert the color to an rgb array
+				var colorRGBs = hexToRGB(citizen.color);
 
-			// 	'id' : index,
-			// 	'RGBs' : colorRGBs,		
-			// 	'fitness' : 0,
-			// 	'color' : citizen.color,		
-			// 	'bestColor' : 0					
-			// };
+				
+				citizen['id'] = index;
+				citizen['RGBs'] = colorRGBs;
+				citizen['fitness'] = 0;
+				citizen['color'] = citizen.color;
+				citizen['bestColor'] = 0;
+
+				// 	'id' : index,
+				// 	'RGBs' : colorRGBs,		
+				// 	'fitness' : 0,
+				// 	'color' : citizen.color,		
+				// 	'bestColor' : 0					
+				// };
 
 
-			// Evaluate its fitness
-			var colorFitness = fitness(citizen);
-			citizen['fitness'] = colorFitness;
+				// Evaluate its fitness
+				var colorFitness = fitness(citizen);
+				citizen['fitness'] = colorFitness;
 
-			$scope.simulationPopulation.push(citizen);
-			console.log("fitness is ", colorFitness);
-		});
-		console.log($rootScope.population);
+				$scope.simulationPopulation.push(citizen);
+				console.log("fitness is ", colorFitness);
+			});
+			console.log($rootScope.population);
 
-		$scope.runIteration()
+			$scope.runIteration()
+		}
 		// $("#parent-a").addClass('shake')
 		// $("#parent-b").addClass('shake')
 
@@ -106,53 +107,55 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		console.log("body",$("#body").width() / 2);
 		console.log("center", $(".center").width());
 		
-		angular.forEach($rootScope.population, function(citizen) {
-			var probabilityOfSelection = sigmoid(citizen['fitness']) / 2;
-			probabilties.push(probabilityOfSelection);
-			console.log("prob is " + probabilityOfSelection);
-			var flip = Math.random();
-			if (flip < probabilityOfSelection) {	
-				if ($scope.parentA == null) {					
-					$scope.parentA = citizen;	
-					var distanceALeft = "+=" + ($("#body").width() / 2 - $(".center").width() / 2 - 20
-												- $("#citizen-" + $scope.parentA.id).position().left);	
-					// $("#citizen-" + $scope.parentA.id).css({'left':'0'})
-					$("#citizen-" + $scope.parentA.id).animate({
-    						left: distanceALeft
-					}, 1000, function() {
-						// console.log("done animating")
-						// citizen['selected'] = true;						
-					});
-					// $("#parent-container").append( $("#citizen-" + $scope.parentA.id) );
-					
-				} else if ($scope.parentB == null) {					
-					$scope.parentB = citizen;
-					var distanceBLeft = "+=" + ($("#body").width() / 2 + $(".center").width() / 2 - 20
-											- $("#citizen-" + $scope.parentB.id).position().left);				
-					$("#citizen-" + $scope.parentB.id).css({'left':'0'})
-					$("#citizen-" + $scope.parentB.id).animate({
-    						left: distanceBLeft
-					}, 900, function() {
-						$("#citizen-" + $scope.parentA.id).hide();
-						$("#citizen-" + $scope.parentB.id).hide();					
-					});
-					$timeout(function() {
-						$scope.parentsSelected = true;
-						// $scope.$apply();
+		while ($scope.parentA == null || $scope.parentB == null && $rootScope.stageIndex != 0) {
+			console.log("selecting...")
+			angular.forEach($rootScope.population, function(citizen) {
+				var probabilityOfSelection = sigmoid(citizen['fitness']) / 2;
+				probabilties.push(probabilityOfSelection);
+				console.log("prob is " + probabilityOfSelection);
+				var flip = Math.random();
+				if (flip < probabilityOfSelection) {	
+					if ($scope.parentA == null) {					
+						$scope.parentA = citizen;	
+						var distanceALeft = "+=" + ($("#body").width() / 2 - $(".center").width() / 2 - 20
+													- $("#citizen-" + $scope.parentA.id).position().left);	
+						// $("#citizen-" + $scope.parentA.id).css({'left':'0'})
+						$("#citizen-" + $scope.parentA.id).animate({
+	    						left: distanceALeft
+						}, 1000, function() {
+							// console.log("done animating")
+							// citizen['selected'] = true;						
+						});
+						// $("#parent-container").append( $("#citizen-" + $scope.parentA.id) );
 						
-						$("#parent-a > .color-section").css({'background-color': $scope.parentA.color});
-						$("#parent-b > .color-section").css({'background-color': $scope.parentB.color});
-						$rootScope.targetRGBs = hexToRGB($rootScope.targetColor);
-						deferred.resolve();
-					}, 400);
-					// $("#citizen-" + $scope.parentB.id).detach();
-					// $("#parent-container").append( $("#citizen-" + $scope.parentB.id) );
-					// // $("#citizen-" + $scope.parentB.id).appendTo($("#body"));
-					// citizen['selected'] = true;
-				}
-			}		
-		});
-
+					} else if ($scope.parentB == null && $scope.parentA != citizen) {					
+						$scope.parentB = citizen;
+						var distanceBLeft = "+=" + ($("#body").width() / 2 + $(".center").width() / 2 - 20
+												- $("#citizen-" + $scope.parentB.id).position().left);				
+						$("#citizen-" + $scope.parentB.id).css({'left':'0'})
+						$("#citizen-" + $scope.parentB.id).animate({
+	    						left: distanceBLeft
+						}, 900, function() {
+							$("#citizen-" + $scope.parentA.id).hide();
+							$("#citizen-" + $scope.parentB.id).hide();					
+						});
+						$timeout(function() {
+							$scope.parentsSelected = true;
+							// $scope.$apply();
+							
+							$("#parent-a > .color-section").css({'background-color': $scope.parentA.color});
+							$("#parent-b > .color-section").css({'background-color': $scope.parentB.color});
+							$rootScope.targetRGBs = hexToRGB($rootScope.targetColor);
+							deferred.resolve();
+						}, 400);
+						// $("#citizen-" + $scope.parentB.id).detach();
+						// $("#parent-container").append( $("#citizen-" + $scope.parentB.id) );
+						// // $("#citizen-" + $scope.parentB.id).appendTo($("#body"));
+						// citizen['selected'] = true;
+					}
+				}		
+			});
+		}
 		return deferred.promise;
 		
 		// // choose best probability if couldn't choose 2 parents
@@ -235,6 +238,7 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 
 
 		child = {
+			'id' : $rootScope.population.length,
 			'RGBs' : [0, 0, 0],
 			'fitness' : 0,
 			'color' : "#",
@@ -329,7 +333,7 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		$("#child-box").animate(
 			{'left':distanceRight, 'bottom':distanceUp}, 
 			800, function() {
-				console.log("done animating")
+				console.log("done animating")				
 				$rootScope.population.push(child);	
 				$rootScope.$apply();
 			}
