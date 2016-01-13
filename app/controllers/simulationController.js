@@ -1,4 +1,4 @@
-app.controller("simulationController", ["$rootScope", "$scope", "$window","$timeout","$animate", "$q", function($rootScope, $scope, $window, $timeout, $animate, $q) {
+app.controller("simulationController", ["$rootScope", "$scope", "$window","$timeout","$animate", "$q", '$route',  function($rootScope, $scope, $window, $timeout, $animate, $q, $route) {
 	function initialize() {
 
 		targetRGBs = hexToRGB($rootScope.targetColor);
@@ -12,7 +12,7 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		$scope.breedingDone = false;
 
 		if (angular.isUndefined($rootScope.population) || ($rootScope.population.length == 0)) {
-			$window.location.href = "/app/#/"
+			$window.location.href = "#/"
 		} else {
 			$('.center').removeClass('card');
 
@@ -409,6 +409,14 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 			}
 		}
 		return [maxIndex, secondMaxIndex];
+	}
+
+
+	$scope.restart = function() {				
+		$rootScope.population = [];
+		$rootScope.targetSelected = false;
+		$rootScope.stageIndex = 0;
+		$route.reload();		
 	}
 
 	initialize();

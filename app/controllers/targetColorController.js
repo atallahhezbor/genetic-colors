@@ -2,6 +2,8 @@ app.controller('targetColorController', ['$rootScope', '$scope', '$filter', '$wi
 
 
 	function intialize() {
+		console.log("initializing target color");
+
 		$scope.colorInput = "";
 		$scope.loaded="true";
 		// $scope.loaded=false;
@@ -29,11 +31,11 @@ app.controller('targetColorController', ['$rootScope', '$scope', '$filter', '$wi
 		// $scope.randomColors = ['red', 'orange', 'blue', 'green', 'purple', 'yellow', '#000000'];
 	}
 
-	$scope.$on('colorClicked', function(e, color) {
-		console.log("target received", color)
-		$rootScope.targetColor = color;				
-		$window.location.href = '#/population'
-	});
+	// $scope.$on('colorClicked', function(e, color) {
+	// 	console.log("target received", color)
+	// 	$rootScope.targetColor = color;					
+	// 	$window.location.href = '#/population'
+	// });
 
 
 

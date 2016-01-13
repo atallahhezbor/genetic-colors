@@ -1,4 +1,4 @@
-app.controller('appController',['$rootScope', '$scope', function($rootScope, $scope) {
+app.controller('appController',['$rootScope', '$scope', '$window', function($rootScope, $scope, $window) {
 
 	function initialize() {
 		$rootScope.targetSelected = false;
@@ -9,12 +9,15 @@ app.controller('appController',['$rootScope', '$scope', function($rootScope, $sc
 		// $scope.simulationView = false;
 		$rootScope.stages = [$scope.targetView, $scope.populationView, $scope.simulationView];
 		$rootScope.stageIndex = 0;
+
 	}
 
-	$rootScope.$watch('targetSelected', function (newVal, oldVal) {
-		console.log("CHANGED target selected", $rootScope.targetSelected);
-		
-	});
+
+		// $scope.$on('colorClicked', function(e, color) {
+	// 	console.log("target received", color)
+	// 	$rootScope.targetColor = color;					
+	// 	$window.location.href = '#/population'
+	// });
 
 	$scope.$on('colorClicked', function(event, color) {		
 		console.log("app contrroller received color")
@@ -23,6 +26,7 @@ app.controller('appController',['$rootScope', '$scope', function($rootScope, $sc
 			$rootScope.targetSelected = true;
 			$('.color-section').css('background-color', color);
 			$rootScope.stageIndex++;
+			$window.location.href = '#/population'
 			return;
 		}
 
@@ -32,6 +36,14 @@ app.controller('appController',['$rootScope', '$scope', function($rootScope, $sc
 			return;
 		}
 	});
+
+
+	$rootScope.$watch('targetSelected', function (newVal, oldVal) {
+		console.log("CHANGED target selected", $rootScope.targetSelected);
+		
+	});
+
+
 
 
 	// $scope.advance = function() {

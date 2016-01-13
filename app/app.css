@@ -193,21 +193,20 @@
 }
 
 
-.next-button {  
-  position:absolute;
+.next-button {    
   /*background-color: lightgray;*/
   /*border-radius: 5px;*/
   color:white;
-  bottom:0px;
-  
+  margin-bottom:10%;
+  margin-top:85%;  
 }
 
-
+/*
 .next-button:hover {
   background-color: darkgray;
   border-radius: 5px;
   color:white;
-}
+}*/
 
 .color-container {
   margin-right: auto;
@@ -361,4 +360,8 @@ body {
   position: absolute;
   bottom: 0px;
   left:0px;
+}
+
+.button-container {
+  position: relative;
 }
