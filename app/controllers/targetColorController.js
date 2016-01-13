@@ -32,7 +32,7 @@ app.controller('targetColorController', ['$rootScope', '$scope', '$filter', '$wi
 	$scope.$on('colorClicked', function(e, color) {
 		console.log("target received", color)
 		$rootScope.targetColor = color;		
-		$window.location.href = '/app/#/population'
+		$window.location.href = '#/population'
 	});
 
 	intialize();

@@ -15,7 +15,7 @@ app.controller('populationController', ['$rootScope', '$scope', '$filter', '$win
 	$scope.advance = function() {
 		// $rootScope.population = $scope.population;
 		$rootScope.populationSelected = true;		
-		$window.location.href = "/app/#/simulation"
+		$window.location.href = "#/simulation"
 	};
 
 
