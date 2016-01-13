@@ -245,7 +245,7 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 				child.RGBs[i] = mutate(parentA.RGBs[i]);
 			}
 
-			if ($rootScope.targetRGBs[i] - parentA.RGBs[i] < $rootScope.targetRGBs[i] - parentB.RGBs[i]) {
+			if (Math.abs($rootScope.targetRGBs[i] - parentA.RGBs[i]) < Math.abs($rootScope.targetRGBs[i] - parentB.RGBs[i])) {
 				child.RGBs[i] = parentA.RGBs[i];
 			} else {
 				child.RGBs[i] = parentB.RGBs[i];
