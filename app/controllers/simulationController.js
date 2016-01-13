@@ -54,6 +54,7 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 	}
 
 	$scope.runIteration = function() {
+		console.log("Starting iteration")
 		selectParents().then(function(response) {
 			console.log("selection done");
 			$timeout(function() {											
@@ -135,7 +136,8 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 						
 						$("#parent-a > .color-section").css({'background-color': $scope.parentA.color});
 						$("#parent-b > .color-section").css({'background-color': $scope.parentB.color});
-						deferred.resolve()
+						$rootScope.targetRGBs = hexToRGB($rootScope.targetColor);
+						deferred.resolve();
 					}, 400);
 					// $("#citizen-" + $scope.parentB.id).detach();
 					// $("#parent-container").append( $("#citizen-" + $scope.parentB.id) );
@@ -243,29 +245,41 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 				child.RGBs[i] = mutate(parentA.RGBs[i]);
 			}
 
-			if (i == parentA.bestColor) {
-				child.RGBs[i] = parentA.RGBs[parentA.bestColor];							
-				aCount++;
-			} else if (i == parentB.bestColor) {
-				child.RGBs[i] = parentB.RGBs[parentB.bestColor]
-				bCount++;
+			if ($rootScope.targetRGBs[i] - parentA.RGBs[i] < $rootScope.targetRGBs[i] - parentB.RGBs[i]) {
+				child.RGBs[i] = parentA.RGBs[i];
 			} else {
-				if (aCount == 2) {
-					child.RGBs[i] = parentB.RGBs[i];
-				} else if (bCount == 2) {
-					child.RGBs[i] = parentA.RGBs[i];
-				} else {
-					// randomly choose
-					if (Math.random() < 0.5) {
-						child.RGBs[i] = parentB.RGBs[i];
-						bCount++;
-					} else {						
-						child.RGBs[i] = parentA.RGBs[i];
-						aCount++;
-					}
-				}
-				// child['RGBs'][i] = parentA['fitness'] > parentB['fitness'] ? parentA['RGBs'][i] : parentB['RGBs'][i];
+				child.RGBs[i] = parentB.RGBs[i];
 			}
+
+			// if (i == parentA.bestColor) {
+			// 	child.RGBs[i] = parentA.RGBs[parentA.bestColor];							
+			// 	aCount++;
+			// } else if (i == parentB.bestColor) {
+			// 	child.RGBs[i] = parentB.RGBs[parentB.bestColor]
+			// 	bCount++;
+			// } else {
+			// 	if (aCount == 2) {
+			// 		child.RGBs[i] = parentB.RGBs[i];
+			// 	} else if (bCount == 2) {
+			// 		child.RGBs[i] = parentA.RGBs[i];
+			// 	} else {
+
+			// 		if ($rootScope.targetRGBs[i] - parentA.RGBs[i] < $rootScope.targetRGBs[i] - parentB.RGBs[i]) {
+			// 			child.RGBs[i] = parentA.RGBs[i];
+			// 		} else {
+			// 			child.RGBs[i] = parentB.RGBs[i];
+			// 		}
+					// randomly choose
+					// if (Math.random() < 0.5) {
+					// 	child.RGBs[i] = parentB.RGBs[i];
+					// 	bCount++;
+					// } else {						
+					// 	child.RGBs[i] = parentA.RGBs[i];
+					// 	aCount++;
+					// }
+				// }
+				// child['RGBs'][i] = parentA['fitness'] > parentB['fitness'] ? parentA['RGBs'][i] : parentB['RGBs'][i];
+			// }
 		}
 		console.log("parentA ", parentA)
 		console.log("parentB ", parentB)
@@ -295,13 +309,13 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 
 		child.color = "#" + red + green + blue;
 
-		$("#new-child > .color-section").css({'background-color': $scope.parentA.color});
+		$("#new-child > .color-section").css({'background-color': child.color});
 		$scope.child=child;
 		$scope.born = true;
 
 
 		var distanceRight = "-=" + $("#new-child").position().left;
-		$("#new-child").animate(
+		$("#child-box").animate(
 			{'left':distanceRight}, 
 			800, function() {
 				$rootScope.population.push(child.color);	
