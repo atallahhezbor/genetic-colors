@@ -3,7 +3,7 @@ app.controller('targetColorController', ['$rootScope', '$scope', '$filter', '$wi
 
 	function intialize() {
 		console.log("initializing target color");
-
+		$rootScope.showMe = false;
 		$scope.colorInput = "";
 		$scope.loaded="true";
 		// $scope.loaded=false;
