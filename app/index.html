@@ -23,7 +23,7 @@
         <a class="navbar-brand" href="#/">Genetic Colors</a>
       </div>
       <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a href="/about">About</a></li>
+        <li class="active" ng-click="about()"><a href="#/about">About</a></li>
       </ul>
     </div>
   </nav>
@@ -63,6 +63,13 @@
         <div class="text-section"> Target</div>      
         <div ng-show="targetRGBs != null" class="rgb-section"> {{targetRGBs}}</div>  
       </div>
+
+      <div id="target-color" ng-class="showMe ? 'card color-card flippable flip' : 'card color-card flippable'">
+        <div class="picture-section"></div>
+        <div class="text-section"> Atallah Hezbor</div>      
+        <div class="rgb-section"> Author</div>  
+      </div>
+
     </div>
     
 </div>

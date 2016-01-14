@@ -4,6 +4,7 @@ app.controller('appController',['$rootScope', '$scope', '$window', function($roo
 		$rootScope.targetSelected = false;
 		$rootScope.targetColor = "red";
 		$rootScope.population = [];
+		$rootScope.showMe = false;
 		// $scope.targetView = true;
 		// $scope.populationView = false;
 		// $scope.simulationView = false;
@@ -43,7 +44,9 @@ app.controller('appController',['$rootScope', '$scope', '$window', function($roo
 		
 	});
 
-
+	$rootScope.about = function() {
+		$rootScope.showMe = true;
+	}
 
 
 	// $scope.advance = function() {

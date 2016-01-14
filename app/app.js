@@ -14,5 +14,6 @@ config(['$routeProvider', function($routeProvider) {
    		when("/", {templateUrl: "partials/targetColor.html", controller: "targetColorController"}).
    		when("/population", {templateUrl: "partials/population.html", controller: "populationController"}).
    		when("/simulation", {templateUrl: "partials/simulation.html", controller: "simulationController"}).
+      when("/about", {templateUrl: "about.html"}).
    		otherwise({redirectTo: '/'});
 }]);
