@@ -2,7 +2,7 @@
 
 This project is a simulation of the principles of a [Genetic Algorithm](https://en.wikipedia.org/wiki/Genetic_algorithm) by way of color generation. 
 A live demo is available [here](genetic-colors.herokuapp.com/#/).
-
+Special thanks to [angular-seed](https://github.com/angular/angular-seed) for an AngularJS app skeleton.
 
 ## Overview
 The user is first prompted to select an initial color, the target, and select other colors as part of the population, the citizens. The algorithm then passes through three stages: Parent Selection, Recombining, and Mutation. The resulting citizen is placed into the population and another iteration can be run. After many iterations, we can see the population converge towards the target color. At a certain cap, and additional
@@ -13,10 +13,9 @@ Before beginning the algorithm, we must first decide how to encode each solution
 
 ## Parent Selection
 In the first phase of the algorithm, two "parents" must be selected to produce a new color. This selection is a result of a fitness function chosen to identify the best candidates. A naive fitness function would be to simply pick the citizens that are closest to the target color, but this would eliminate any genetic diversity and force the algorithm's solution into a local minima. Instead, I pass the result of the difference of squares between the each color's gene into a sigmoid function.
-             1    
- S(t)  =  -------- 
-                t 
-         1  +  e  
+
+![sigmoid](https://upload.wikimedia.org/math/d/f/9/df9200fdfbae7a1195e1ca1ce3f5e372.png)
+
 The result of which I use as a probability of selection. By doing this, every citizen has a chance of being selected as the parent, and the issue of the same parent being selected each iteration is eliminated.
 
 ## Recombination
