@@ -28,14 +28,6 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 				citizen['color'] = citizen.color;
 				citizen['bestColor'] = 0;
 
-				// 	'id' : index,
-				// 	'RGBs' : colorRGBs,		
-				// 	'fitness' : 0,
-				// 	'color' : citizen.color,		
-				// 	'bestColor' : 0					
-				// };
-
-
 				// Evaluate its fitness
 				var colorFitness = fitness(citizen);
 				citizen['fitness'] = colorFitness;
@@ -47,15 +39,10 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 
 			$scope.runIteration()
 		}
-		// $("#parent-a").addClass('shake')
-		// $("#parent-b").addClass('shake')
-
-		// $timeout(breed($scope.parentA, $scope.parentB), 5000);
 
 	}
 
-	$scope.runIteration = function() {
-		console.log("Starting iteration");
+	$scope.runIteration = function() {		
 		if($scope.parentA != null) {
 			$("#citizen-" + $scope.parentA.id).show();
 			$("#citizen-" + $scope.parentB.id).show();	
@@ -68,8 +55,7 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 			$scope.parentA = null;
 			$scope.parentB = null;
 		}
-		selectParents().then(function(response) {
-			console.log("selection done");
+		selectParents().then(function(response) {			
 			$timeout(function() {											
 				breed($scope.parentA, $scope.parentB);				
 				if($rootScope.population.size > 10) {
@@ -80,6 +66,8 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		
 	}
 
+
+	// Compute the fitness of a given citizen
 	function fitness(citizen) {
 				
 		// fitness is inverse difference of squares from the target color
@@ -99,16 +87,14 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 
 	}
 
+	// Use citizens' fitness values and a sigmoid function to probabilistically select parents
 	function selectParents() {		
 
 		var deferred = $q.defer()
 
-		var probabilties = [];
-		console.log("body",$("#body").width() / 2);
-		console.log("center", $(".center").width());
+		var probabilties = [];		
 		
-		while ($scope.parentA == null || $scope.parentB == null && $rootScope.stageIndex != 0) {
-			console.log("selecting...")
+		while ($scope.parentA == null || $scope.parentB == null && $rootScope.stageIndex != 0) {			
 			angular.forEach($rootScope.population, function(citizen) {
 				var probabilityOfSelection = sigmoid(citizen['fitness']) / 2;
 				probabilties.push(probabilityOfSelection);
@@ -119,14 +105,11 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 						$scope.parentA = citizen;	
 						var distanceALeft = "+=" + ($("#body").width() / 2 - $(".center").width() / 2 - 20
 													- $("#citizen-" + $scope.parentA.id).position().left);	
-						// $("#citizen-" + $scope.parentA.id).css({'left':'0'})
+						
 						$("#citizen-" + $scope.parentA.id).animate({
 	    						left: distanceALeft
-						}, 1000, function() {
-							// console.log("done animating")
-							// citizen['selected'] = true;						
-						});
-						// $("#parent-container").append( $("#citizen-" + $scope.parentA.id) );
+						}, 1000);
+						
 						
 					} else if ($scope.parentB == null && $scope.parentA != citizen) {					
 						$scope.parentB = citizen;
@@ -148,16 +131,14 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 							$rootScope.targetRGBs = hexToRGB($rootScope.targetColor);
 							deferred.resolve();
 						}, 400);
-						// $("#citizen-" + $scope.parentB.id).detach();
-						// $("#parent-container").append( $("#citizen-" + $scope.parentB.id) );
-						// // $("#citizen-" + $scope.parentB.id).appendTo($("#body"));
-						// citizen['selected'] = true;
+
 					}
 				}		
 			});
 		}
 		return deferred.promise;
-		
+
+		// DEPRECATED
 		// // choose best probability if couldn't choose 2 parents
 		// if ($scope.parentA == null) {
 		// 	topTwoIndexes = getTopTwoIndexes(probabilties);
@@ -217,18 +198,13 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		// parentB.detach();
 		// parentA.detach();
 		// parentA.appendTo('.center');
-
-
-
-
 	}
 
-	function sigmoid(fitness) {
-		// console.log("fitness is ", fitness);
-		// console.log("denom", 1.0 + (Math.pow(2.718, -fitness/100000)));
+	function sigmoid(fitness) {		
 		return (1.0 / (1.0 + Math.pow(2.718, -fitness))).toPrecision(3);
 	}
 
+	// Combine two parents' genes into a child citizen
 	function breed(parentA, parentB) {
 		
 		// TODO: allow user to select recombination process
@@ -245,6 +221,7 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 			'bestColor' : 0
 			
 		};
+
 		// option 1: splice together
 
 		var aCount = 0;
@@ -291,22 +268,16 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 				// child['RGBs'][i] = parentA['fitness'] > parentB['fitness'] ? parentA['RGBs'][i] : parentB['RGBs'][i];
 			// }
 		}
-		console.log("parentA ", parentA)
-		console.log("parentB ", parentB)
-		console.log("parentA rgbs", parentA.RGBs)
-		console.log("parentB rgbs", parentB.RGBs)
-		console.log("child rgbs", child.RGBs)
+	
 
-		
 
 		// option 2: take averages
 		// for (var i = 0; i < 3; i++) {
 		// 	// TODO: weight rgbs?
 		// 	child.RGBs[i] = Math.floor((parentA.RGBs[i] + parentB.RGBs[i]) / 2);
 		// }
-
-		// TODO: mutate if duplicate?
-
+		
+		// Mutate the generated child to escape local minima
 		mutateChild(child);
 		
 
@@ -320,34 +291,28 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 
 		child.color = "#" + red + green + blue;
 
+
+		// Set the corresponding HTML element to the new color 
 		$("#new-child > .color-section").css({'background-color': child.color});
 		$scope.child=child;
 		$scope.born = true;
 
 		$("#child-box").css({'background-color': child.color});
 
-		console.log("top",$("#child-box").position().top);
-		console.log("left",$("#child-box").position().left);
 		var distanceRight = "-=" + ($("#body").width() / 2 + 20);
 		var distanceUp = "+=" + ($("#child-box").position().top + 80);
+
+		// animate it center and add it to the population 
 		$("#child-box").animate(
 			{'left':distanceRight, 'bottom':distanceUp}, 
-			800, function() {
-				console.log("done animating")				
+			800, function() {				
 				$rootScope.population.push(child);	
 				$rootScope.$apply();
 			}
-		);
-
-		
-		// $scope.$apply();
-		// $rootScope.$apply();
-
-		// if (parentA.bestColor != parentB.bestColor) {
-
-		// }
-		
+		);		
 	}
+
+	// functions for slightly altering a childs gene sequence
 
 	function mutate(gene) {
 		return Math.floor(Math.random() * gene + 1);
@@ -359,6 +324,7 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		}
 	}
 
+	// Removes the least fit citizen from the population
 	function selectSurvivors() {
 		worstFitness = $scope.simulationPopulation[0];
 		worstFitnessIndex = 0;
@@ -371,11 +337,10 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		}
 		$scope.simulationPopulation.splice(worstFitnessIndex, 1);
 		$rootScope.population.splice(worstFitnessIndex, 1);
-		// $rootScope.$apply();
 	}
 
 
-
+	// converts a hex string into an array of RGB values
 	function hexToRGB(color) {
 		// split into rgb values
 		var red = color.substring(1, 3);

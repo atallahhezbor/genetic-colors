@@ -5,9 +5,6 @@ app.controller('appController',['$rootScope', '$scope', '$window', function($roo
 		$rootScope.targetColor = "red";
 		$rootScope.population = [];
 		$rootScope.showMe = false;
-		// $scope.targetView = true;
-		// $scope.populationView = false;
-		// $scope.simulationView = false;
 		$rootScope.stages = [$scope.targetView, $scope.populationView, $scope.simulationView];
 		$rootScope.stageIndex = 0;
 
@@ -39,21 +36,10 @@ app.controller('appController',['$rootScope', '$scope', '$window', function($roo
 	});
 
 
-	$rootScope.$watch('targetSelected', function (newVal, oldVal) {
-		console.log("CHANGED target selected", $rootScope.targetSelected);
-		
-	});
-
 	$rootScope.about = function() {
 		$rootScope.showMe = true;
 	}
 
-
-	// $scope.advance = function() {
-	// 	$scope.stages[$scope.stageIndex] = false;
-	// 	$scope.stageIndex += 1;
-	// 	$scope.stages[$scope.stageIndex] = true;
-	// }
 
 	initialize();
 

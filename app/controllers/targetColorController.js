@@ -2,12 +2,11 @@ app.controller('targetColorController', ['$rootScope', '$scope', '$filter', '$wi
 
 
 	function intialize() {
-		console.log("initializing target color");
+		
 		$rootScope.showMe = false;
 		$scope.colorInput = "";
 		$scope.loaded="true";
-		// $scope.loaded=false;
-		// $scope.loaded=true;	
+		
 
 		$scope.randomColors = [];
 		
@@ -28,16 +27,8 @@ app.controller('targetColorController', ['$rootScope', '$scope', '$filter', '$wi
 			var hexString = "#" + redHex + greenHex + blueHex;
 			$scope.randomColors.push(hexString);
 		}
-		// $scope.randomColors = ['red', 'orange', 'blue', 'green', 'purple', 'yellow', '#000000'];
+
 	}
-
-	// $scope.$on('colorClicked', function(e, color) {
-	// 	console.log("target received", color)
-	// 	$rootScope.targetColor = color;					
-	// 	$window.location.href = '#/population'
-	// });
-
-
 
 	intialize();
 
