@@ -44,6 +44,25 @@
           Population
         </div>
       </div>
+
+      <div ng-class="population.length > 0 ? 'card flippable flip' : 'card flippable'" ng-cloak>            
+      <div class="flex-container color-container">
+          <select ng-change="combinationChanged()" ng-model="recombination" class="form-control" type="dropdown">
+            <option value="0">Weighted</option>
+            <option value="1">Uniform</option>          
+            <option value="2">Dominance</option>                        
+          </select>
+           <select ng-model="dominantGene" class="form-control" type="dropdown">
+            <option value="0">Red</option>
+            <option value="1">Green</option>          
+            <option value="2">Blue</option>                        
+          </select>
+      </div>
+      <div class="text-section">
+        Settings
+      </div>      
+      </div>
+
     </div>
       
     <!-- </div> -->

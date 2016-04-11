@@ -7,7 +7,8 @@ app.controller('appController',['$rootScope', '$scope', '$window', function($roo
 		$rootScope.showMe = false;
 		$rootScope.stages = [$scope.targetView, $scope.populationView, $scope.simulationView];
 		$rootScope.stageIndex = 0;
-
+		$rootScope.recombination = 0;
+		$rootScope.dominantGene = 0;
 	}
 
 
@@ -16,6 +17,16 @@ app.controller('appController',['$rootScope', '$scope', '$window', function($roo
 	// 	$rootScope.targetColor = color;					
 	// 	$window.location.href = '#/population'
 	// });
+
+	$scope.combinationChanged = function() {
+		if ($rootScope.recombination == 0) {
+			$rootScope.recombination = 1;
+		} else {
+			$rootScope.recombination = 0;
+		}
+
+
+	}
 
 	$scope.$on('colorClicked', function(event, color) {		
 		console.log("app contrroller received color")

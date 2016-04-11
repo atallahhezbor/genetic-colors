@@ -1,6 +1,8 @@
 app.controller("simulationController", ["$rootScope", "$scope", "$window","$timeout","$animate", "$q", '$route',  function($rootScope, $scope, $window, $timeout, $animate, $q, $route) {
 	function initialize() {
 
+
+
 		targetRGBs = hexToRGB($rootScope.targetColor);
 
 		
@@ -10,6 +12,9 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		$scope.parentsSelected = false;		
 		$scope.born = false;
 		$scope.breedingDone = false;
+		$rootScope.recombination = 0
+		
+
 
 		if (angular.isUndefined($rootScope.population) || ($rootScope.population.length == 0)) {
 			$window.location.href = "#/"
@@ -41,6 +46,11 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		}
 
 	}
+
+	$rootScope.$watch('recombination', function (newVal, oldVal) {
+		console.log("recombination changed")
+		console.log($rootScope.recombination);
+	});
 
 	$scope.runIteration = function() {		
 		if($scope.parentA != null) {
@@ -227,15 +237,35 @@ app.controller("simulationController", ["$rootScope", "$scope", "$window","$time
 		var aCount = 0;
 		var bCount = 0;
 		for (var i = 0; i < 3; i++) {
+			console.log("in breed: " + $rootScope.recombination);
+			if ($rootScope.recombination == 1) {			
+				if (parentA.RGBs[i] == parentB.RGBs[i]) {
+					child.RGBs[i] = mutate(parentA.RGBs[i]);
+				}
 
-			if (parentA.RGBs[i] == parentB.RGBs[i]) {
-				child.RGBs[i] = mutate(parentA.RGBs[i]);
-			}
-
-			if (Math.abs($rootScope.targetRGBs[i] - parentA.RGBs[i]) < Math.abs($rootScope.targetRGBs[i] - parentB.RGBs[i])) {
-				child.RGBs[i] = parentA.RGBs[i];
+				if (Math.abs($rootScope.targetRGBs[i] - parentA.RGBs[i]) < Math.abs($rootScope.targetRGBs[i] - parentB.RGBs[i])) {
+					child.RGBs[i] = parentA.RGBs[i];
+				} else {
+					child.RGBs[i] = parentB.RGBs[i];
+				}
+			} else if ($rootScope.recombination == 1) {
+				console.log("doing uniform");
+				if (Math.random() < 0.5) {
+					child.RGBs[i] = parentA.RGBs[i];
+				} else {
+					child.RGBs[i] = parentB.RGBs[i];
+				}
 			} else {
-				child.RGBs[i] = parentB.RGBs[i];
+				if (i == $rootScope.dominantGene) {
+					// select the gene of the parent with the largest dominant gene
+					var gene = parentA.RGBs[i] > parentB.RGBs[i] ? parentA.RGBs[i] : parentB.RGBs[i];
+					child.RGBs[i] = gene;
+				} else {
+				if (Math.random() < 0.5) {
+					child.RGBs[i] = parentA.RGBs[i];
+				} else {
+					child.RGBs[i] = parentB.RGBs[i];
+				}
 			}
 
 			// if (i == parentA.bestColor) {
