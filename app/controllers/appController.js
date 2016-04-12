@@ -12,20 +12,12 @@ app.controller('appController',['$rootScope', '$scope', '$window', function($roo
 	}
 
 
-		// $scope.$on('colorClicked', function(e, color) {
-	// 	console.log("target received", color)
-	// 	$rootScope.targetColor = color;					
-	// 	$window.location.href = '#/population'
-	// });
-
-	$scope.combinationChanged = function() {
+	$scope.changeRecombination = function() {
 		if ($rootScope.recombination == 0) {
 			$rootScope.recombination = 1;
 		} else {
 			$rootScope.recombination = 0;
 		}
-
-
 	}
 
 	$scope.$on('colorClicked', function(event, color) {		

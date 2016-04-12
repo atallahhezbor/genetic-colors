@@ -46,17 +46,23 @@
       </div>
 
       <div ng-class="population.length > 0 ? 'card flippable flip' : 'card flippable'" ng-cloak>            
-      <div class="flex-container color-container">
-          <select ng-change="combinationChanged()" ng-model="recombination" class="form-control" type="dropdown">
-            <option value="0">Weighted</option>
-            <option value="1">Uniform</option>          
-            <option value="2">Dominance</option>                        
-          </select>
-           <select ng-model="dominantGene" class="form-control" type="dropdown">
-            <option value="0">Red</option>
-            <option value="1">Green</option>          
-            <option value="2">Blue</option>                        
-          </select>
+      <div class="flex-container">
+          <div class="col-sm-8">
+            <label>Recombination Method</label>
+            <select ng-change="changeRecombination()" ng-model="recombination" class="form-control" type="dropdown">
+              <option selected value="0">Weighted</option>
+              <option value="1">Uniform</option>          
+              <option value="2">Dominance</option>                        
+            </select>
+          </div>
+          <div class="col-sm-8" ng-show="recombination == 2">
+            <label>Dominant Gene</label>
+             <select ng-model="dominantGene" class="form-control" type="dropdown">
+              <option selected value="0">Red</option>
+              <option value="1">Green</option>          
+              <option value="2">Blue</option>                        
+            </select>
+          </div>
       </div>
       <div class="text-section">
         Settings
